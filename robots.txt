@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://resolvefraude.com.br/sitemap.xml
