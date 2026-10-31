@@ -25,15 +25,62 @@
   <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@400;700&display=swap"></noscript>
+  <link rel="preload" as="image" href="../assets/img/hero.webp" imagesrcset="../assets/img/hero-800.webp 800w, ../assets/img/hero.webp 1600w" imagesizes="100vw" fetchpriority="high">
+  <link rel="stylesheet" href="../assets/css/style.css?v=2">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://resolvefraude.com.br/#org",
+        "name": "Resolve Fraude",
+        "url": "https://resolvefraude.com.br/"
+      },
+      {
+        "@type": "Service",
+        "name": "Consultoria em prevenção à fraude",
+        "serviceType": "Consultoria antifraude",
+        "description": "Soluções personalizadas para ajudar sua organização a prevenir e gerenciar fraudes: governança, análise de risco, auditorias e conscientização.",
+        "provider": {
+          "@id": "https://resolvefraude.com.br/#org"
+        },
+        "areaServed": {
+          "@type": "Country",
+          "name": "Brasil"
+        },
+        "url": "https://resolvefraude.com.br/consultoria/"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Início",
+            "item": "https://resolvefraude.com.br/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Consultoria",
+            "item": "https://resolvefraude.com.br/consultoria/"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <a class="skip" href="#conteudo">Pular para o conteúdo</a>
 
   <header class="cabecalho">
     <nav class="nav container">
-      <a href="../" class="marca"><img src="../assets/img/logo-icone.png" alt="" width="48" height="48"><span>RESOLVE <b>FRAUDE</b></span></a>
+      <a href="../" class="marca"><img src="../assets/img/logo-icone.webp" alt="" width="48" height="48"><span>RESOLVE <b>FRAUDE</b></span></a>
       <button class="menu-btn" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu">&#9776;</button>
       <ul class="menu" id="menu">
         <li><a href="../">Início</a></li>
@@ -46,7 +93,8 @@
   </header>
 
   <main id="conteudo">
-    <section class="hero hero-pagina" style="background-image: url(../assets/img/hero.jpg)">
+    <section class="hero hero-pagina">
+      <img class="hero-img" src="../assets/img/hero.webp" srcset="../assets/img/hero-800.webp 800w, ../assets/img/hero.webp 1600w" sizes="100vw" width="1600" height="900" alt="" fetchpriority="high">
       <div class="container">
         <div class="hero-texto">
           <span class="rotulo">Consultoria</span>
@@ -73,7 +121,7 @@
 
     <section class="secao secao-alt">
       <div class="container duas-colunas">
-        <img src="../assets/img/treinamento.jpg" alt="Consultores analisando dados em reunião" width="1200" height="800" loading="lazy">
+        <img src="../assets/img/treinamento.webp" srcset="../assets/img/treinamento-800.webp 800w, ../assets/img/treinamento.webp 1200w" sizes="(max-width: 860px) 100vw, 560px" alt="Consultores analisando dados em reunião" width="1200" height="800" loading="lazy">
         <div>
           <h2>Como trabalhamos</h2>
           <p><strong>1. Diagnóstico.</strong> Entendemos seus processos, controles e pontos de exposição a fraudes.</p>
@@ -98,7 +146,7 @@
   <footer class="rodape">
     <div class="container rodape-grade">
       <div class="rodape-marca">
-        <a href="../" class="marca"><img src="../assets/img/logo-icone.png" alt="" width="44" height="44" loading="lazy"><span>RESOLVE <b>FRAUDE</b></span></a>
+        <a href="../" class="marca"><img src="../assets/img/logo-icone.webp" alt="" width="44" height="44" loading="lazy"><span>RESOLVE <b>FRAUDE</b></span></a>
         <p>Consultoria especializada em prevenção à fraude: treinamento, governança e conscientização para proteger a integridade da sua organização.</p>
       </div>
       <div>
