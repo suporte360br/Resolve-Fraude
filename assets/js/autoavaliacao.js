@@ -2,7 +2,7 @@
 // Tudo roda no navegador; nada é enviado a servidor. O visitante pode mandar o resultado por e-mail.
 (() => {
   const EMAIL_DESTINO = 'contato@resolvefraude.com.br';
-  const CHAVE = 'rf-autoavaliacao';
+  const CHAVE = 'rf-autoavaliacao-v2'; // mude a versão ao alterar a ordem das perguntas
 
   const ESCALA = [
     { valor: 0, rotulo: 'Não existe', ajuda: 'Não temos ou não sabemos.' },
@@ -25,8 +25,8 @@
       id: 'fraude',
       sigla: 'F',
       nome: 'Prevenção à fraude',
-      descricao: 'Governança antifraude, controles, canal de denúncias e resposta, segundo o guia COSO/ACFE e o programa de integridade da Lei Anticorrupção.',
-      referencias: 'COSO/ACFE Fraud Risk Management Guide (2ª ed.), Decreto nº 11.129/2022 (art. 57), ISO 37001, ISO 37002 e ISO 37301',
+      descricao: 'Governança antifraude, controles, monitoramento transacional interno e externo, canal de denúncias e resposta, segundo o guia COSO/ACFE e o programa de integridade da Lei Anticorrupção.',
+      referencias: 'COSO/ACFE Fraud Risk Management Guide (2ª ed.), Decreto nº 11.129/2022 (art. 57), Lei nº 9.613/1998, ISO 37001, ISO 37002 e ISO 37301',
       perguntas: [
         { titulo: 'Política antifraude e responsabilidade da direção', texto: 'Existe uma política antifraude aprovada pela alta direção, com responsáveis definidos pelo programa?', ref: 'COSO/ACFE FRM Princípio 1; Decreto 11.129/2022, art. 57', rec: 'Aprove uma política antifraude com o apoio explícito da diretoria e nomeie um responsável pelo programa.' },
         { titulo: 'Código de conduta e conflito de interesses', texto: 'Há código de conduta e declaração de conflito de interesses, com aceite formal e renovado dos colaboradores?', ref: 'Decreto 11.129/2022, art. 57; ISO 37301', rec: 'Publique um código de conduta, colete o aceite anual e crie um formulário de declaração de conflito de interesses.' },
@@ -34,7 +34,9 @@
         { titulo: 'Diligência de terceiros', texto: 'Fornecedores, parceiros e clientes relevantes passam por verificação (due diligence) antes da contratação?', ref: 'Decreto 11.129/2022, art. 57; ISO 37001', rec: 'Implante um checklist de due diligence (CNPJ, sócios, listas restritivas, processos) proporcional ao risco do terceiro.' },
         { titulo: 'Segregação de funções e alçadas', texto: 'Funções críticas são separadas (quem cadastra não aprova, quem aprova não paga) e há limites de aprovação?', ref: 'COSO Controle Interno; COSO/ACFE FRM Princípio 3', rec: 'Mapeie conflitos de funções nos processos financeiros e defina uma matriz de alçadas.' },
         { titulo: 'Controles de pagamento', texto: 'Alterações de dados bancários são confirmadas por outro canal e pagamentos relevantes exigem dupla aprovação?', ref: 'COSO/ACFE FRM Princípio 3 (controles preventivos)', rec: 'Exija confirmação por telefone já cadastrado para qualquer troca de conta e dupla aprovação acima de um valor definido.' },
-        { titulo: 'Monitoramento e análise de dados', texto: 'A empresa usa relatórios ou análise de dados para detectar transações fora do padrão?', ref: 'COSO/ACFE FRM Princípios 3 e 5', rec: 'Comece com testes simples: fornecedores duplicados, pagamentos fora do horário, valores fracionados abaixo da alçada.' },
+        { titulo: 'Monitoramento transacional interno', texto: 'Pagamentos, compras, reembolsos de despesas, folha e ajustes de estoque são monitorados por regras ou análise de dados que geram alertas de transações fora do padrão?', ref: 'COSO/ACFE FRM Princípios 3 e 5 (análise de dados proativa)', rec: 'Implante regras de alerta para fornecedores duplicados ou com dados bancários de funcionários, pagamentos fora do horário, valores fracionados abaixo da alçada, reembolsos repetidos e lançamentos manuais.' },
+        { titulo: 'Monitoramento transacional externo', texto: 'Transações de clientes e parceiros (vendas, cadastros, pagamentos com cartão e Pix, estornos e chargebacks) passam por análise antifraude antes ou durante a operação?', ref: 'COSO/ACFE FRM Princípio 3; Lei nº 9.613/1998, arts. 10 e 11 (setores obrigados)', rec: 'Use regras e score de risco no cadastro e na transação (velocidade, geolocalização, dispositivo, listas restritivas), autenticação reforçada nas operações de risco e acompanhamento do índice de chargeback.' },
+        { titulo: 'Tratamento de alertas e ajuste das regras', texto: 'Os alertas de monitoramento têm responsável, prazo de análise e registro do desfecho, e as regras são recalibradas com base nos resultados?', ref: 'COSO/ACFE FRM Princípios 4 e 5', rec: 'Defina uma fila de alertas com responsável e prazo, registre o desfecho (fraude, falso positivo) e revise as regras periodicamente para reduzir falsos positivos e cobrir novos golpes.' },
         { titulo: 'Canal de denúncias', texto: 'Existe canal de denúncias acessível, com opção de anonimato e política de não retaliação?', ref: 'ISO 37002; Decreto 11.129/2022, art. 57', rec: 'Disponibilize um canal independente (formulário web, e-mail e telefone), divulgue-o e formalize a não retaliação.' },
         { titulo: 'Investigação e ação corretiva', texto: 'Há procedimento definido para apurar suspeitas, preservar evidências e aplicar medidas disciplinares?', ref: 'COSO/ACFE FRM Princípio 4', rec: 'Escreva um procedimento de investigação (quem conduz, como preservar provas, prazos) e um regime disciplinar coerente.' },
         { titulo: 'Treinamento antifraude', texto: 'Os colaboradores recebem treinamento periódico sobre fraudes, golpes e como reportar?', ref: 'Decreto 11.129/2022, art. 57; COSO/ACFE FRM Princípio 1', rec: 'Inclua treinamento antifraude na integração e reciclagem anual, com casos reais do seu setor.' },
@@ -133,7 +135,7 @@
         <label class="largo">E-mail*<input type="email" name="email" required autocomplete="email" value="${esc(d.email || '')}"></label>
         <p class="aa-erro largo" role="alert" hidden>Preencha nome, empresa e um e-mail válido.</p>
         <button class="botao largo" type="submit">Iniciar autoavaliação</button>
-        <p class="nota largo">São 36 perguntas, cerca de 10 minutos. Suas respostas ficam só no seu navegador; você decide no final se quer enviá-las para a Resolve Fraude. Veja a <a href="../privacidade.html">Política de Privacidade</a>.</p>
+        <p class="nota largo">São ${DOMINIOS.reduce((t, d) => t + d.perguntas.length, 0)} perguntas, cerca de 10 minutos. Suas respostas ficam só no seu navegador; você decide no final se quer enviá-las para a Resolve Fraude. Veja a <a href="../privacidade.html">Política de Privacidade</a>.</p>
       </form>`;
     const form = app.querySelector('form');
     form.addEventListener('submit', (e) => {
