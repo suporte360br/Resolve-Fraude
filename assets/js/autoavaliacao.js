@@ -2,7 +2,7 @@
 // Tudo roda no navegador; nada é enviado a servidor. O visitante pode mandar o resultado por e-mail.
 (() => {
   const EMAIL_DESTINO = 'contato@resolvefraude.com.br';
-  const CHAVE = 'rf-autoavaliacao-v2'; // mude a versão ao alterar a ordem das perguntas
+  const CHAVE = 'rf-autoavaliacao-v3'; // mude a versão ao alterar a ordem das perguntas
 
   const ESCALA = [
     { valor: 0, rotulo: 'Não existe', ajuda: 'Não temos ou não sabemos.' },
@@ -48,21 +48,26 @@
       id: 'seguranca',
       sigla: 'S',
       nome: 'Segurança da informação',
-      descricao: 'Proteção de sistemas, dados e pessoas contra ataques e falhas, segundo a ISO/IEC 27001:2022, o NIST Cybersecurity Framework 2.0 e os CIS Controls.',
-      referencias: 'ISO/IEC 27001:2022 (Anexo A), NIST CSF 2.0 e CIS Controls v8.1',
+      descricao: 'Governança, gestão de riscos, proteção de sistemas, dados e pessoas, continuidade de negócios e gestão de crise, segundo a ISO/IEC 27001:2022, o NIST Cybersecurity Framework 2.0, os CIS Controls e a ISO 22301.',
+      referencias: 'ISO/IEC 27001:2022 (Anexo A), ISO/IEC 27005, NIST CSF 2.0, CIS Controls v8.1 e ISO 22301',
       perguntas: [
+        { titulo: 'Governança de segurança', texto: 'Segurança da informação tem governança definida: comitê ou fórum com participação da diretoria, papéis e responsabilidades claros, orçamento e alinhamento com os objetivos do negócio?', ref: 'ISO/IEC 27001 cl. 5.1 e 5.3; NIST CSF GV.OC, GV.RR, GV.OV', rec: 'Crie um comitê de segurança com a diretoria, defina papéis (matriz RACI), orçamento anual e pauta periódica de decisões.' },
         { titulo: 'Política e responsável por segurança', texto: 'Existe política de segurança da informação aprovada e uma pessoa responsável pelo tema?', ref: 'ISO/IEC 27001 cl. 5.2 e A.5.1–5.2; NIST CSF GV.PO, GV.RR', rec: 'Aprove uma política de segurança e designe um responsável (interno ou CISO como serviço).' },
         { titulo: 'Inventário de ativos e dados', texto: 'A empresa sabe quais equipamentos, sistemas, contas em nuvem e dados importantes possui?', ref: 'ISO/IEC 27001 A.5.9; NIST CSF ID.AM; CIS 1, 2 e 3', rec: 'Monte um inventário de equipamentos, softwares, serviços em nuvem e bases de dados críticas, com dono de cada item.' },
-        { titulo: 'Gestão de riscos de segurança', texto: 'Os riscos de segurança são avaliados e tratados com um plano, revisado periodicamente?', ref: 'ISO/IEC 27001 cl. 6.1 e 8.2; NIST CSF ID.RA', rec: 'Faça uma análise de riscos simples (ameaça, impacto, probabilidade) e um plano de tratamento com prazos.' },
-        { titulo: 'Controle de acesso', texto: 'Acessos seguem o menor privilégio, são removidos no desligamento e revisados periodicamente?', ref: 'ISO/IEC 27001 A.5.15–5.18; NIST CSF PR.AA; CIS 5 e 6', rec: 'Formalize a concessão e revogação de acessos e revise os acessos a sistemas críticos a cada trimestre.' },
+        { titulo: 'Gestão de riscos de segurança', texto: 'Os riscos de segurança são avaliados e tratados com um plano, revisado periodicamente?', ref: 'ISO/IEC 27001 cl. 6.1 e 8.2; ISO/IEC 27005; NIST CSF ID.RA', rec: 'Faça uma análise de riscos simples (ameaça, impacto, probabilidade) e um plano de tratamento com prazos.' },
+        { titulo: 'Aceite de risco', texto: 'Riscos que não serão tratados são aceitos formalmente pelo dono do risco, com justificativa, controles compensatórios e prazo de validade para reavaliação?', ref: 'ISO/IEC 27001 cl. 6.1.3 e 8.3; ISO/IEC 27005; NIST CSF GV.RM', rec: 'Crie um termo de aceite de risco assinado pelo dono do risco dentro do apetite definido pela diretoria, com validade (ex.: 12 meses) e registro centralizado.' },
+        { titulo: 'Onboarding, mudança de função e offboarding', texto: 'Acessos são concedidos por perfil aprovado na admissão, ajustados na mudança de função e revogados no mesmo dia do desligamento, com devolução de equipamentos?', ref: 'ISO/IEC 27001 A.5.11, A.5.16, A.5.18, A.6.1–6.5; NIST CSF PR.AA; CIS 5 e 6.1–6.2', rec: 'Integre RH e TI num fluxo único de admissão, mudança e desligamento, com perfis de acesso por cargo, checklist de revogação e devolução de ativos.' },
+        { titulo: 'Revisão periódica de acessos e atestação', texto: 'Os gestores revisam e atestam formalmente, em ciclos definidos, quem tem acesso a cada sistema, com atenção especial a contas privilegiadas e inativas?', ref: 'ISO/IEC 27001 A.5.18 e A.8.2; NIST CSF PR.AA; CIS 5.3 e 6', rec: 'Faça campanhas de atestação trimestrais para sistemas críticos e acessos privilegiados (semestrais para os demais), removendo o que não for confirmado.' },
         { titulo: 'Autenticação em dois fatores (MFA)', texto: 'E-mail, acesso remoto, contas administrativas e sistemas críticos exigem MFA?', ref: 'ISO/IEC 27001 A.8.5; CIS 6.3–6.5', rec: 'Ative MFA primeiro no e-mail, VPN/acesso remoto, contas de administrador e internet banking.' },
         { titulo: 'Atualizações e vulnerabilidades', texto: 'Sistemas e equipamentos recebem atualizações de segurança em prazo definido e há varredura de vulnerabilidades?', ref: 'ISO/IEC 27001 A.8.8; NIST CSF PR.PS; CIS 7', rec: 'Defina prazos para aplicar atualizações críticas e faça varreduras de vulnerabilidades periódicas.' },
         { titulo: 'Proteção de computadores e e-mail', texto: 'Há antimalware gerenciado, filtro de e-mail e autenticação do domínio (SPF, DKIM e DMARC)?', ref: 'ISO/IEC 27001 A.8.7; CIS 9 e 10', rec: 'Use proteção de endpoint gerenciada e configure SPF, DKIM e DMARC no domínio para dificultar e-mails falsos.' },
         { titulo: 'Backup e recuperação', texto: 'Há backup automático dos dados críticos, com cópia isolada (offline ou imutável) e testes de restauração?', ref: 'ISO/IEC 27001 A.8.13; NIST CSF RC; CIS 11', rec: 'Siga a regra 3-2-1 com uma cópia isolada e teste a restauração ao menos a cada semestre.' },
         { titulo: 'Monitoramento e registros (logs)', texto: 'Eventos de segurança são registrados e monitorados, com alertas para atividades suspeitas?', ref: 'ISO/IEC 27001 A.8.15–8.16; NIST CSF DE.CM; CIS 8', rec: 'Centralize os logs de e-mail, nuvem e firewall e configure alertas para logins suspeitos.' },
         { titulo: 'Resposta a incidentes', texto: 'Existe plano de resposta a incidentes (ex.: ransomware), com papéis definidos e testado em simulação?', ref: 'ISO/IEC 27001 A.5.24–5.28; NIST CSF RS; CIS 17', rec: 'Escreva um plano de resposta com contatos, decisões e comunicação, e faça um exercício de mesa por ano.' },
+        { titulo: 'Continuidade de negócios (SGCN) e mesa de crise', texto: 'Existe gestão de continuidade de negócios (análise de impacto, RTO/RPO, planos de continuidade) e um comitê de crise com papéis, comunicação e exercícios periódicos?', ref: 'ISO 22301; ISO/IEC 27001 A.5.29–5.30; NIST CSF RC.RP', rec: 'Faça a análise de impacto nos negócios (BIA), defina RTO/RPO dos processos críticos, monte o comitê de crise (mesa de crise) e realize ao menos um exercício por ano.' },
         { titulo: 'Conscientização e phishing', texto: 'Os colaboradores recebem treinamento de segurança e participam de simulações de phishing?', ref: 'ISO/IEC 27001 A.6.3; NIST CSF PR.AT; CIS 14', rec: 'Faça treinamentos curtos e frequentes e simulações de phishing trimestrais com retorno educativo.' },
         { titulo: 'Fornecedores e nuvem', texto: 'Fornecedores de TI e serviços em nuvem são avaliados quanto à segurança e têm requisitos em contrato?', ref: 'ISO/IEC 27001 A.5.19–5.23; NIST CSF GV.SC; CIS 15', rec: 'Classifique fornecedores por criticidade, peça evidências de segurança e inclua cláusulas contratuais.' },
+        { titulo: 'Indicadores de segurança', texto: 'Há indicadores de segurança (KPIs e KRIs) medidos e reportados periodicamente à diretoria, com metas e análise crítica?', ref: 'ISO/IEC 27001 cl. 9.1 e 9.3; NIST CSF GV.OV, ID.IM', rec: 'Defina poucos indicadores com meta (ex.: % de MFA, tempo para corrigir vulnerabilidades críticas, taxa de clique em phishing, acessos revisados) e apresente à diretoria trimestralmente.' },
       ],
     },
     {
@@ -135,7 +140,7 @@
         <label class="largo">E-mail*<input type="email" name="email" required autocomplete="email" value="${esc(d.email || '')}"></label>
         <p class="aa-erro largo" role="alert" hidden>Preencha nome, empresa e um e-mail válido.</p>
         <button class="botao largo" type="submit">Iniciar autoavaliação</button>
-        <p class="nota largo">São ${DOMINIOS.reduce((t, d) => t + d.perguntas.length, 0)} perguntas, cerca de 10 minutos. Suas respostas ficam só no seu navegador; você decide no final se quer enviá-las para a Resolve Fraude. Veja a <a href="../privacidade.html">Política de Privacidade</a>.</p>
+        <p class="nota largo">São ${DOMINIOS.reduce((t, d) => t + d.perguntas.length, 0)} perguntas, cerca de 15 minutos. Suas respostas ficam só no seu navegador; você decide no final se quer enviá-las para a Resolve Fraude. Veja a <a href="../privacidade.html">Política de Privacidade</a>.</p>
       </form>`;
     const form = app.querySelector('form');
     form.addEventListener('submit', (e) => {
@@ -275,7 +280,7 @@
           </div>
         </div>
 
-        <p class="aa-aviso">Esta autoavaliação é indicativa e baseada nas respostas informadas. Não substitui auditoria, certificação ou parecer jurídico. As referências citam requisitos e boas práticas da ISO/IEC 27001:2022, NIST CSF 2.0, CIS Controls v8.1, COSO/ACFE Fraud Risk Management Guide, ISO 37001, 37002 e 37301, ISO/IEC 27701, LGPD e resoluções da ANPD.</p>
+        <p class="aa-aviso">Esta autoavaliação é indicativa e baseada nas respostas informadas. Não substitui auditoria, certificação ou parecer jurídico. As referências citam requisitos e boas práticas da ISO/IEC 27001:2022, ISO/IEC 27005, ISO 22301, NIST CSF 2.0, CIS Controls v8.1, COSO/ACFE Fraud Risk Management Guide, ISO 37001, 37002 e 37301, ISO/IEC 27701, LGPD e resoluções da ANPD.</p>
         <p class="aa-refazer"><button class="link" type="button" data-refazer>Refazer a autoavaliação</button></p>
       </section>`;
     app.querySelector('[data-imprimir]').addEventListener('click', () => window.print());
