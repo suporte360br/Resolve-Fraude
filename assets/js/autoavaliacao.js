@@ -12,13 +12,15 @@
     { valor: 4, rotulo: 'Gerenciado', ajuda: 'Além de implementado, é medido, revisado e melhorado.' },
   ];
 
+  // Cores dos níveis (também usadas nas notas 0 a 4 de cada item, na mesma ordem)
   const NIVEIS = [
-    { ate: 20, nome: 'Inicial', texto: 'Os controles são raros ou inexistentes. A empresa está muito exposta e depende da sorte.' },
-    { ate: 40, nome: 'Básico', texto: 'Há iniciativas isoladas, mas sem estrutura. Riscos relevantes ainda não têm resposta.' },
-    { ate: 60, nome: 'Em desenvolvimento', texto: 'A base existe, mas a aplicação é desigual. É hora de formalizar e cobrir as lacunas.' },
-    { ate: 80, nome: 'Estruturado', texto: 'Os controles estão implementados. O próximo passo é medir a eficácia e melhorar continuamente.' },
-    { ate: 100, nome: 'Avançado', texto: 'Programa maduro, medido e revisado. Mantenha a melhoria contínua e teste os controles.' },
+    { de: 0, ate: 20, nome: 'Inicial', cor: '#E5484D', texto: 'Os controles são raros ou inexistentes. A empresa está muito exposta e depende da sorte.' },
+    { de: 21, ate: 40, nome: 'Básico', cor: '#F76B15', texto: 'Há iniciativas isoladas, mas sem estrutura. Riscos relevantes ainda não têm resposta.' },
+    { de: 41, ate: 60, nome: 'Em desenvolvimento', cor: '#FFB224', texto: 'A base existe, mas a aplicação é desigual. É hora de formalizar e cobrir as lacunas.' },
+    { de: 61, ate: 80, nome: 'Estruturado', cor: '#8BC34A', texto: 'Os controles estão implementados. O próximo passo é medir a eficácia e melhorar continuamente.' },
+    { de: 81, ate: 100, nome: 'Avançado', cor: '#16A34A', texto: 'Programa maduro, medido e revisado. Mantenha a melhoria contínua e teste os controles.' },
   ];
+  const corNota = (v) => NIVEIS[v].cor;
 
   const DOMINIOS = [
     {
@@ -221,16 +223,178 @@
     return linhas.join('\n');
   }
 
-  function telaResultado() {
+  function calcular() {
     const notas = DOMINIOS.map(notaDominio);
     const geral = Math.round(notas.reduce((a, b) => a + b, 0) / notas.length);
-    const nGeral = nivel(geral);
     const principais = lacunas();
     const fortes = [];
     DOMINIOS.forEach((d) => d.perguntas.forEach((p, i) => { if (estado.respostas[chave(d, i)] === 4) fortes.push({ d, p }); }));
-    const data = new Date().toLocaleDateString('pt-BR');
+    return { notas, geral, principais, fortes, data: new Date().toLocaleDateString('pt-BR') };
+  }
+
+  // ---------- PDF (jsPDF carregado só quando necessário) ----------
+  function carregarJsPDF() {
+    if (window.jspdf) return Promise.resolve(window.jspdf.jsPDF);
+    return new Promise((ok, erro) => {
+      const s = document.createElement('script');
+      s.src = '../assets/js/vendor/jspdf.umd.min.js';
+      s.onload = () => ok(window.jspdf.jsPDF);
+      s.onerror = () => erro(new Error('Não foi possível carregar o gerador de PDF.'));
+      document.head.appendChild(s);
+    });
+  }
+
+  // Logo reduzido para 96px em JPEG, para o PDF ficar leve como anexo
+  function logoParaPDF(url) {
+    return new Promise((ok) => {
+      const img = new Image();
+      img.onload = () => {
+        const c = document.createElement('canvas');
+        c.width = 96; c.height = 96;
+        c.getContext('2d').drawImage(img, 0, 0, 96, 96);
+        ok(c.toDataURL('image/jpeg', 0.9));
+      };
+      img.onerror = () => ok(null);
+      img.src = url;
+    });
+  }
+
+  // As fontes padrão do PDF não têm alguns sinais tipográficos; troca por equivalentes simples
+  const pdfTexto = (s) => String(s).replace(/[–—]/g, '-').replace(/[‘’]/g, "'").replace(/[“”]/g, '"').replace(/…/g, '...');
+  const rgb = (hex) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
+  const nomeArquivo = () => `Autoavaliacao-${(estado.dados.empresa || 'empresa').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^\w]+/g, '-').replace(/^-|-$/g, '').slice(0, 40)}.pdf`;
+
+  async function gerarPDF(r) {
+    const JsPDF = await carregarJsPDF();
+    const logo = await logoParaPDF('../assets/img/logo-icone.png');
+    const pdf = new JsPDF({ unit: 'mm', format: 'a4', compress: true });
+    const L = 210, M = 16, LARG = L - 2 * M, ALT = 297, BASE = ALT - 18;
+    let y = 0;
+
+    const fonte = (tam, estilo = 'normal', cor = '#1D2024') => { pdf.setFont('helvetica', estilo); pdf.setFontSize(tam); pdf.setTextColor(...rgb(cor)); };
+    const novaPagina = () => { pdf.addPage(); y = M; };
+    const espaco = (h) => { if (y + h > BASE) novaPagina(); };
+    const paragrafo = (texto, tam, estilo, cor, x = M, largura = LARG, entre = 1.5) => {
+      fonte(tam, estilo, cor);
+      const linhas = pdf.splitTextToSize(pdfTexto(texto), largura);
+      const h = linhas.length * tam * 0.3528 * 1.25;
+      espaco(h);
+      pdf.text(linhas, x, y + tam * 0.3528);
+      y += h + entre;
+    };
+    const titulo = (texto) => { espaco(14); y += 4; fonte(13, 'bold'); pdf.text(pdfTexto(texto), M, y + 4); y += 7; pdf.setDrawColor(...rgb('#F7E01B')); pdf.setLineWidth(0.8); pdf.line(M, y, M + 14, y); y += 5; };
+    const barra = (x, yy, largura, nota, cor) => {
+      pdf.setFillColor(230, 231, 233); pdf.roundedRect(x, yy, largura, 3, 1.5, 1.5, 'F');
+      if (nota > 0) { pdf.setFillColor(...rgb(cor)); pdf.roundedRect(x, yy, Math.max(3, (largura * nota) / 100), 3, 1.5, 1.5, 'F'); }
+    };
+
+    // Cabeçalho
+    pdf.setFillColor(29, 32, 36); pdf.rect(0, 0, L, 34, 'F');
+    if (logo) pdf.addImage(logo, 'JPEG', M, 8, 18, 18);
+    fonte(15, 'bold', '#FFFFFF'); pdf.text('RESOLVE', M + 22, 16);
+    fonte(15, 'bold', '#F7E01B'); pdf.text('FRAUDE', M + 22 + pdf.getTextWidth('RESOLVE '), 16);
+    fonte(10, 'normal', '#B9BEC6'); pdf.text(pdfTexto('Autoavaliação de maturidade em fraude, segurança e privacidade'), M + 22, 23);
+    pdf.text(r.data, L - M, 16, { align: 'right' });
+    y = 44;
+
+    // Empresa e nota geral
+    const nG = nivel(r.geral);
+    fonte(18, 'bold'); pdf.text(pdfTexto(estado.dados.empresa), M, y + 6, { maxWidth: LARG - 50 });
+    fonte(9.5, 'normal', '#555B63'); pdf.text(pdfTexto(`Respondido por ${estado.dados.nome} (${estado.dados.email})`), M, y + 13, { maxWidth: LARG - 50 });
+    const cx = L - M - 20, cy = y + 10;
+    pdf.setDrawColor(...rgb(nG.cor)); pdf.setLineWidth(2.2); pdf.circle(cx, cy, 17, 'S');
+    fonte(22, 'bold'); pdf.text(String(r.geral), cx, cy + 2, { align: 'center' });
+    fonte(7.5, 'normal', '#555B63'); pdf.text('de 100', cx, cy + 7, { align: 'center' });
+    fonte(9, 'bold', nG.cor); pdf.text(pdfTexto(nG.nome), cx, cy + 24, { align: 'center' });
+    y += 22;
+    paragrafo(nG.texto, 10.5, 'normal', '#1D2024', M, LARG - 48, 6);
+    y = Math.max(y, cy + 30);
+
+    // Notas por domínio
+    titulo('Resultado por área');
+    DOMINIOS.forEach((d, i) => {
+      espaco(12);
+      const n = nivel(r.notas[i]);
+      fonte(10.5, 'bold'); pdf.text(pdfTexto(d.nome), M, y + 4);
+      fonte(10.5, 'bold', n.cor); pdf.text(pdfTexto(`${r.notas[i]}/100 - ${n.nome}`), L - M, y + 4, { align: 'right' });
+      barra(M, y + 6.5, LARG, r.notas[i], n.cor);
+      y += 13;
+    });
+
+    // Legenda dos níveis
+    espaco(10);
+    let lx = M;
+    NIVEIS.forEach((n) => {
+      pdf.setFillColor(...rgb(n.cor)); pdf.circle(lx + 1.6, y + 1.6, 1.6, 'F');
+      fonte(7.5, 'normal', '#555B63');
+      const t = pdfTexto(`${n.nome} (${n.de}-${n.ate})`);
+      pdf.text(t, lx + 4.5, y + 2.6);
+      lx += pdf.getTextWidth(t) + 9;
+    });
+    y += 8;
+
+    // Mapa por item
+    DOMINIOS.forEach((d) => {
+      titulo(`${d.nome}: nota por item`);
+      d.perguntas.forEach((p, j) => {
+        const v = estado.respostas[chave(d, j)] || 0;
+        espaco(6);
+        for (let k = 0; k < 4; k++) {
+          if (k < v) { pdf.setFillColor(...rgb(corNota(v))); pdf.circle(M + 1.5 + k * 3.6, y + 1.8, 1.25, 'F'); } else { pdf.setDrawColor(190, 194, 199); pdf.setLineWidth(0.3); pdf.circle(M + 1.5 + k * 3.6, y + 1.8, 1.2, 'S'); }
+        }
+        fonte(9.5, 'normal'); pdf.text(pdfTexto(p.titulo), M + 17, y + 2.9);
+        fonte(8.5, 'bold', corNota(v)); pdf.text(`${v}/4`, L - M, y + 2.9, { align: 'right' });
+        y += 5.6;
+      });
+      paragrafo(`Base: ${d.referencias}`, 7.5, 'italic', '#7A8089', M, LARG, 1);
+    });
+
+    // Prioridades
+    titulo('Prioridades recomendadas');
+    if (!r.principais.length) paragrafo('Nenhum item ficou com nota 2 ou menor. Concentre-se em medir a eficácia e testar os controles.', 10, 'normal', '#1D2024');
+    r.principais.forEach((l, i) => {
+      espaco(18);
+      fonte(10.5, 'bold'); pdf.text(pdfTexto(`${i + 1}. ${l.p.titulo}`), M, y + 4);
+      fonte(8.5, 'bold', corNota(l.v)); pdf.text(pdfTexto(`${l.d.nome} - ${l.v}/4`), L - M, y + 4, { align: 'right' });
+      y += 6;
+      paragrafo(l.p.rec, 9.5, 'normal', '#1D2024', M + 4, LARG - 4, 0.5);
+      paragrafo(`Referência: ${l.p.ref}`, 7.5, 'italic', '#7A8089', M + 4, LARG - 4, 3);
+    });
+
+    if (r.fortes.length) {
+      titulo('Pontos fortes');
+      r.fortes.forEach((f) => paragrafo(`- ${f.p.titulo} (${f.d.nome})`, 9.5, 'normal', '#1D2024', M, LARG, 0.5));
+    }
+
+    y += 4;
+    paragrafo('Esta autoavaliação é indicativa e baseada nas respostas informadas. Não substitui auditoria, certificação ou parecer jurídico. As referências citam requisitos e boas práticas da ISO/IEC 27001:2022, ISO/IEC 27005, ISO 22301, NIST CSF 2.0, CIS Controls v8.1, COSO/ACFE Fraud Risk Management Guide, ISO 37001, 37002 e 37301, ISO/IEC 27701, LGPD e resoluções da ANPD.', 7.5, 'normal', '#7A8089');
+
+    // Rodapé em todas as páginas
+    const total = pdf.getNumberOfPages();
+    for (let p = 1; p <= total; p++) {
+      pdf.setPage(p);
+      pdf.setDrawColor(220, 222, 225); pdf.setLineWidth(0.3); pdf.line(M, ALT - 12, L - M, ALT - 12);
+      fonte(7.5, 'normal', '#7A8089');
+      pdf.text(`resolvefraude.com.br  |  ${EMAIL_DESTINO}`, M, ALT - 7);
+      pdf.text(pdfTexto(`Página ${p} de ${total}`), L - M, ALT - 7, { align: 'right' });
+    }
+    pdf.setProperties({ title: pdfTexto(`Autoavaliação - ${estado.dados.empresa}`), author: 'Resolve Fraude', creator: 'resolvefraude.com.br' });
+    return pdf.output('blob');
+  }
+
+  function baixar(blob) {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = nomeArquivo();
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 60000);
+  }
+
+  function telaResultado() {
+    const r = calcular();
+    const { notas, geral, principais, fortes, data } = r;
+    const nGeral = nivel(geral);
     const assunto = `Autoavaliação - ${estado.dados.empresa}`;
-    const mailto = `mailto:${EMAIL_DESTINO}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(resumoEmail(geral, notas, principais))}`;
 
     app.innerHTML = `${progresso()}
       <section class="aa-resultado">
@@ -240,20 +404,21 @@
             <h2 tabindex="-1">${esc(estado.dados.empresa)}</h2>
             <p class="aa-quem">Respondido por ${esc(estado.dados.nome)} (${esc(estado.dados.email)})</p>
           </div>
-          <div class="aa-geral nivel-${NIVEIS.indexOf(nGeral)}">
+          <div class="aa-geral" style="--cor:${nGeral.cor}">
             <strong>${geral}</strong><span>de 100</span><em>${nGeral.nome}</em>
           </div>
         </header>
         <p class="aa-nivel-texto">${esc(nGeral.texto)}</p>
+        <ul class="aa-legenda" aria-label="Níveis de maturidade">${NIVEIS.map((n) => `<li style="--cor:${n.cor}"${n === nGeral ? ' class="atual"' : ''}><span></span>${n.nome} <small>${n.de}–${n.ate}</small></li>`).join('')}</ul>
 
         <div class="grade grade-3 aa-cards">
-          ${DOMINIOS.map((d, i) => `<article class="item aa-card">
+          ${DOMINIOS.map((d, i) => `<article class="item aa-card" style="--cor:${nivel(notas[i]).cor}">
             <h3>${esc(d.nome)}</h3>
             <p class="aa-nota"><strong>${notas[i]}</strong>/100<span>${nivel(notas[i]).nome}</span></p>
             <div class="aa-medidor" aria-hidden="true"><span style="width:${notas[i]}%"></span></div>
             <ul class="aa-mapa">${d.perguntas.map((p, j) => {
               const v = estado.respostas[chave(d, j)] || 0;
-              return `<li><span class="aa-pontos v${v}" aria-label="${v} de 4">${'●'.repeat(v)}${'○'.repeat(4 - v)}</span>${esc(p.titulo)}</li>`;
+              return `<li><span class="aa-pontos" style="--cor:${corNota(v)}" aria-label="${v} de 4">${'●'.repeat(v)}${'○'.repeat(4 - v)}</span>${esc(p.titulo)}</li>`;
             }).join('')}</ul>
             <p class="aa-ref">Base: ${esc(d.referencias)}</p>
           </article>`).join('')}
@@ -272,18 +437,56 @@
         <div class="aa-cta">
           <div>
             <h3>Quer transformar o diagnóstico em plano de ação?</h3>
-            <p>Envie o resultado para a Resolve Fraude. Seu aplicativo de e-mail abrirá com o resumo pronto; nada é enviado sem você confirmar.</p>
+            <p>Envie o resultado em PDF para a Resolve Fraude. Nada é enviado sem você confirmar no seu aplicativo de e-mail.</p>
           </div>
           <div class="botoes">
-            <a class="botao" href="${mailto}">Enviar resultado por e-mail</a>
-            <button class="botao botao-contorno" type="button" data-imprimir>Salvar em PDF</button>
+            <button class="botao" type="button" data-enviar>Enviar resultado por e-mail</button>
+            <button class="botao botao-contorno" type="button" data-pdf>Salvar em PDF</button>
           </div>
+          <p class="aa-status" role="status" hidden></p>
         </div>
 
         <p class="aa-aviso">Esta autoavaliação é indicativa e baseada nas respostas informadas. Não substitui auditoria, certificação ou parecer jurídico. As referências citam requisitos e boas práticas da ISO/IEC 27001:2022, ISO/IEC 27005, ISO 22301, NIST CSF 2.0, CIS Controls v8.1, COSO/ACFE Fraud Risk Management Guide, ISO 37001, 37002 e 37301, ISO/IEC 27701, LGPD e resoluções da ANPD.</p>
         <p class="aa-refazer"><button class="link" type="button" data-refazer>Refazer a autoavaliação</button></p>
       </section>`;
-    app.querySelector('[data-imprimir]').addEventListener('click', () => window.print());
+    const status = app.querySelector('.aa-status');
+    const avisar = (texto) => { status.textContent = texto; status.hidden = !texto; };
+    const botoes = app.querySelectorAll('[data-enviar], [data-pdf]');
+    const ocupado = (sim) => botoes.forEach((b) => { b.disabled = sim; });
+
+    app.querySelector('[data-pdf]').addEventListener('click', async () => {
+      ocupado(true); avisar('Gerando o PDF...');
+      try { baixar(await gerarPDF(r)); avisar(`PDF salvo: ${nomeArquivo()}`); } catch (e) { avisar('Não foi possível gerar o PDF. Tente novamente.'); }
+      ocupado(false);
+    });
+
+    app.querySelector('[data-enviar]').addEventListener('click', async () => {
+      ocupado(true); avisar('Gerando o PDF...');
+      try {
+        const blob = await gerarPDF(r);
+        const arquivo = new File([blob], nomeArquivo(), { type: 'application/pdf' });
+        const celular = window.matchMedia('(pointer: coarse)').matches;
+        if (celular && navigator.canShare && navigator.canShare({ files: [arquivo] })) {
+          // Celular: abre o compartilhamento do sistema com o PDF já anexado
+          try {
+            await navigator.share({ files: [arquivo], title: assunto, text: `Enviar para: ${EMAIL_DESTINO}\n\n${resumoEmail(geral, notas, principais)}` });
+            avisar('');
+          } catch (e) {
+            if (e.name !== 'AbortError') throw e;
+            avisar('');
+          }
+        } else {
+          // Computador: baixa o PDF e abre o e-mail já endereçado, pedindo para anexar
+          baixar(blob);
+          const corpo = resumoEmail(geral, notas, principais).replace('\n\n', `\n\nSegue em anexo o PDF com o resultado (${nomeArquivo()}).\n\n`);
+          setTimeout(() => { window.location.href = `mailto:${EMAIL_DESTINO}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpo)}`; }, 500);
+          avisar(`O PDF "${nomeArquivo()}" foi salvo na sua pasta de downloads. Anexe-o ao e-mail que abriu e clique em enviar.`);
+        }
+      } catch (e) {
+        avisar(`Não foi possível gerar o PDF. Você pode escrever para ${EMAIL_DESTINO}.`);
+      }
+      ocupado(false);
+    });
     app.querySelector('[data-refazer]').addEventListener('click', () => {
       estado.respostas = {};
       irPara(1);
