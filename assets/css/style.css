@@ -307,3 +307,9 @@ details p { margin: .75rem 0 0; color: var(--texto-suave); }
 .aa-legenda small { opacity: .7; font-weight: 400; }
 .aa-status { flex-basis: 100%; margin: 0; font-size: .92rem; color: var(--amarelo); }
 .aa-cta .botao:disabled { opacity: .6; cursor: wait; }
+
+/* Foto de abertura dos artigos */
+.artigo-foto { margin: 0 0 2rem; }
+.artigo-foto img { display: block; width: 100%; height: auto; border-radius: 8px; }
+.artigo-foto figcaption { font-size: .8rem; color: var(--texto-suave); margin-top: .4rem; text-align: right; }
+.artigo .credito { font-size: .95rem; color: var(--texto-suave); margin-top: 2rem; }
