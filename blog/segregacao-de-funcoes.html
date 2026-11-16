@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Segregação de funções: matriz e controles | Resolve Fraude</title>
+  <meta name="description" content="O que é segregação de funções, conflitos típicos por processo, como montar a matriz de segregação e quais controles compensatórios usar em equipes pequenas.">
+  <meta property="og:title" content="Segregação de funções: como montar a matriz e o que fazer quando a equipe é pequena">
+  <meta property="og:description" content="O que é segregação de funções, conflitos típicos por processo, como montar a matriz de segregação e quais controles compensatórios usar em equipes pequenas.">
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2026-11-16">
+  <meta property="article:modified_time" content="2026-11-16">
+  <meta property="article:author" content="Resolve Fraude">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:url" content="https://resolvefraude.com.br/blog/segregacao-de-funcoes.html">
+  <meta property="og:image" content="https://resolvefraude.com.br/assets/img/og-segregacao-de-funcoes.jpg">
+  <meta property="og:image:secure_url" content="https://resolvefraude.com.br/assets/img/og-segregacao-de-funcoes.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Grupo de mulheres trabalhando juntas em uma mesa com papéis e um tablet">
+  <meta property="og:site_name" content="Resolve Fraude">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://resolvefraude.com.br/assets/img/og-segregacao-de-funcoes.jpg">
+  <link rel="canonical" href="https://resolvefraude.com.br/blog/segregacao-de-funcoes.html">
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@400;700&display=swap"></noscript>
+  <link rel="stylesheet" href="../assets/css/style.css?v=15">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://resolvefraude.com.br/#org",
+        "name": "Resolve Fraude",
+        "url": "https://resolvefraude.com.br/"
+      },
+      {
+        "@type": "BlogPosting",
+        "headline": "Segregação de funções: como montar a matriz e o que fazer quando a equipe é pequena",
+        "description": "O que é segregação de funções, conflitos típicos por processo, como montar a matriz de segregação e quais controles compensatórios usar em equipes pequenas.",
+        "url": "https://resolvefraude.com.br/blog/segregacao-de-funcoes.html",
+        "mainEntityOfPage": "https://resolvefraude.com.br/blog/segregacao-de-funcoes.html",
+        "image": "https://resolvefraude.com.br/assets/img/og-segregacao-de-funcoes.jpg",
+        "datePublished": "2026-11-16",
+        "dateModified": "2026-11-16",
+        "inLanguage": "pt-BR",
+        "author": {
+          "@id": "https://resolvefraude.com.br/#org"
+        },
+        "publisher": {
+          "@id": "https://resolvefraude.com.br/#org"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Início",
+            "item": "https://resolvefraude.com.br/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Blog",
+            "item": "https://resolvefraude.com.br/blog/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Segregação de funções: como montar a matriz e o que fazer quando a equipe é pequena",
+            "item": "https://resolvefraude.com.br/blog/segregacao-de-funcoes.html"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="cabecalho">
+    <nav class="nav container">
+      <a href="../" class="marca"><img src="../assets/img/logo-icone.webp" alt="" width="48" height="48"><span>RESOLVE <b>FRAUDE</b></span></a>
+      <button class="menu-btn" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu">&#9776;</button>
+      <ul class="menu" id="menu">
+        <li><a href="../">Início</a></li>
+        <li><a href="../quem-somos/">Quem somos</a></li>
+        <li><a href="../consultoria/">Consultoria</a></li>
+        <li><a href="../treinamentos/">Treinamentos</a></li>
+        <li><a href="../blog/" aria-current="page">Blog</a></li>
+        <li><a href="../autoavaliacao/">Autoavaliação</a></li>
+        <li><a href="../contatos/">Contatos</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="conteudo" class="container estreito texto artigo">
+    <p><a href="./">&larr; Voltar ao blog</a></p>
+    <span class="post-data">16/11/2026</span>
+    <h1>Segregação de funções: como montar a matriz e o que fazer quando a equipe é pequena</h1>
+
+    <figure class="artigo-foto">
+      <img src="../assets/img/segregacao-de-funcoes.webp" srcset="../assets/img/segregacao-de-funcoes-800.webp 800w, ../assets/img/segregacao-de-funcoes.webp 1600w" sizes="(max-width: 832px) 100vw, 800px" width="1600" height="1066" alt="Grupo de mulheres trabalhando juntas em uma mesa com papéis e um tablet" fetchpriority="high">
+      <figcaption>Foto: RF._.studio _ / Pexels</figcaption>
+    </figure>
+
+    <p>A <strong>segregação de funções</strong> é um dos controles mais antigos e eficazes contra fraudes e erros: nenhuma pessoa deve controlar sozinha todas as etapas de uma transação. Quando quem cadastra o fornecedor também aprova e paga, basta uma pessoa mal-intencionada para que o dinheiro saia sem ninguém perceber.</p>
+    <p>Segundo o <a href="https://www.acfe.com/report-to-the-nations" target="_blank" rel="noopener"><em>Occupational Fraud 2026: A Report to the Nations</em></a>, da ACFE, mais da metade das fraudes ocupacionais envolveu falta de controles internos ou a burla de controles existentes. Segregação de funções é a primeira linha dessa defesa.</p>
+
+    <h2>As quatro funções que não devem se juntar</h2>
+    <ul>
+      <li><strong>Autorizar</strong> uma operação (aprovar a compra, o pagamento, o acesso).</li>
+      <li><strong>Executar</strong> a operação (emitir o pedido, fazer o pagamento).</li>
+      <li><strong>Registrar</strong> a operação (lançar na contabilidade ou no sistema).</li>
+      <li><strong>Custodiar e conferir</strong> (guardar o ativo, conciliar contas, contar o estoque).</li>
+    </ul>
+    <p>O <a href="https://www.coso.org/guidance-on-ic" target="_blank" rel="noopener">COSO Internal Control (2013)</a> (princípio 10) pede que a empresa separe funções incompatíveis e, quando isso não for possível, desenhe controles alternativos. A <a href="https://www.iso.org/standard/27001" target="_blank" rel="noopener">ISO/IEC 27001:2022</a> (controle A.5.3) aplica o mesmo princípio à tecnologia: quem pede, quem aprova e quem executa uma mudança ou um acesso devem ser pessoas diferentes.</p>
+
+    <h2>Conflitos típicos por processo</h2>
+    <div class="tabela"><table><thead><tr><th>Processo</th><th>Funções que não devem ficar com a mesma pessoa</th></tr></thead><tbody><tr><td>Compras</td><td>Requisitar × aprovar a compra × receber a mercadoria</td></tr><tr><td>Contas a pagar</td><td>Cadastrar ou alterar fornecedor × lançar a nota × aprovar o pagamento × conciliar o banco</td></tr><tr><td>Vendas</td><td>Conceder desconto ou crédito × faturar × receber e baixar títulos</td></tr><tr><td>Folha</td><td>Cadastrar empregado × calcular a folha × liberar o pagamento</td></tr><tr><td>Estoque</td><td>Guardar o estoque × ajustar o inventário no sistema</td></tr><tr><td>Tecnologia</td><td>Solicitar × aprovar × conceder acesso; desenvolver × aprovar × colocar em produção</td></tr></tbody></table></div>
+
+    <h2>Como montar a matriz de segregação</h2>
+    <ol>
+      <li><strong>Liste as atividades</strong> críticas de cada processo e as transações correspondentes no sistema (ERP, banco, folha).</li>
+      <li><strong>Marque os pares incompatíveis</strong> em uma matriz: atividades nas linhas e nas colunas, com um "X" onde não pode haver acúmulo.</li>
+      <li><strong>Levante quem faz o quê:</strong> perfis e acessos reais de cada usuário, não só o organograma.</li>
+      <li><strong>Encontre os conflitos</strong> cruzando os acessos com a matriz.</li>
+      <li><strong>Trate cada conflito:</strong> remover o acesso, redistribuir a tarefa, criar um controle compensatório ou aceitar o risco formalmente, com responsável e prazo.</li>
+      <li><strong>Revise periodicamente:</strong> acessos se acumulam com mudanças de função. A revisão periódica de acessos pelos gestores evita que um conflito resolvido volte a aparecer.</li>
+    </ol>
+
+    <h2>E quando a equipe é pequena?</h2>
+    <p>Em empresas com duas ou três pessoas no financeiro, separar tudo é impossível. Nesses casos, use <strong>controles compensatórios</strong>:</p>
+    <ul>
+      <li>Revisão independente pelo sócio ou diretor dos pagamentos, extratos e conciliações.</li>
+      <li>Dupla aprovação no internet banking para pagamentos acima de um valor.</li>
+      <li>Conciliação bancária feita ou revisada pelo contador externo.</li>
+      <li>Relatórios de exceção: fornecedores novos, alterações de dados bancários e lançamentos manuais.</li>
+      <li>Férias obrigatórias e rodízio, com outra pessoa assumindo as tarefas.</li>
+      <li>Registros de sistema (logs) que mostrem quem fez cada alteração.</li>
+    </ul>
+
+    <h2>Armadilhas comuns</h2>
+    <ul>
+      <li><strong>Superusuários</strong> com acesso a tudo "para resolver problemas".</li>
+      <li><strong>Contas compartilhadas</strong>, que impedem saber quem fez o quê.</li>
+      <li><strong>Exceções temporárias</strong> que viram permanentes.</li>
+      <li><strong>Segregação só no papel:</strong> a política separa as funções, mas o sistema deixa todos fazerem tudo.</li>
+    </ul>
+    <p>Para saber onde a falta de segregação é mais perigosa, comece pela <a href="matriz-de-riscos-de-fraude.html">matriz de riscos de fraude</a>. Segregação reduz a <em>oportunidade</em>, o lado do <a href="triangulo-da-fraude.html">triângulo da fraude</a> que a empresa mais controla.</p>
+
+    <aside class="leia-tambem" aria-labelledby="leia-segregacao-de-funcoes">
+      <h2 id="leia-segregacao-de-funcoes">Leia também</h2>
+      <ul>
+        <li><a href="matriz-de-riscos-de-fraude.html"><strong>Matriz de riscos de fraude: como montar a sua em 6 passos</strong><span>Como montar uma matriz de riscos de fraude: esquemas por processo, probabilidade e impacto, controles, risco residual e plano de ação, com exemplo pronto.</span></a></li>
+        <li><a href="triangulo-da-fraude.html"><strong>Triângulo da fraude: pressão, oportunidade e racionalização na prática</strong><span>O que é o triângulo da fraude de Donald Cressey, exemplos de pressão, oportunidade e racionalização, como as normas o usam e quais controles atacam cada lado.</span></a></li>
+        <li><a href="monitoramento-transacional.html"><strong>Monitoramento transacional: o que é, exemplos de regras e como implantar</strong><span>O que é monitoramento transacional interno e externo, exemplos de regras de alerta, o que a regulação exige e um roteiro para implantar na sua empresa.</span></a></li>
+      </ul>
+    </aside>
+
+    <h2>Fontes</h2>
+    <ul class="fontes">
+      <li>COSO — <a href="https://www.coso.org/guidance-on-ic" target="_blank" rel="noopener">Internal Control — Integrated Framework (2013)</a>, princípio 10.</li>
+      <li>ISO — <a href="https://www.iso.org/standard/27001" target="_blank" rel="noopener">ISO/IEC 27001:2022</a>, controle A.5.3.</li>
+      <li>ACFE — <a href="https://www.acfe.com/report-to-the-nations" target="_blank" rel="noopener"><em>Occupational Fraud 2026: A Report to the Nations</em></a>.</li>
+      <li>COSO e ACFE — <a href="https://www.acfe.com/fraud-resources/fraud-risk-tools---coso" target="_blank" rel="noopener">Fraud Risk Management Guide</a> (2ª edição).</li>
+    </ul>
+
+    <div class="chamada">
+      <p><strong>Quer mapear os conflitos de funções da sua empresa?</strong> A Resolve Fraude monta a matriz de segregação, cruza com os acessos reais e propõe controles compensatórios. Conheça a nossa <a href="../consultoria/">consultoria em prevenção à fraude</a> ou <a href="../contatos/">fale com a gente</a>.</p>
+    </div>
+  </main>
+
+  <footer class="rodape">
+    <div class="container rodape-grade">
+      <div class="rodape-marca">
+        <a href="../" class="marca"><img src="../assets/img/logo-icone.webp" alt="" width="44" height="44" loading="lazy"><span>RESOLVE <b>FRAUDE</b></span></a>
+        <p>Consultoria especializada em prevenção à fraude: treinamento, governança e conscientização para proteger a integridade da sua organização.</p>
+      </div>
+      <div>
+        <h3>Contato</h3>
+        <ul class="rodape-contato">
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>São Paulo – SP</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><a href="mailto:contato@resolvefraude.com.br">contato@resolvefraude.com.br</a></li>
+        </ul>
+        <a class="botao botao-pequeno" href="../contatos/">Fale conosco</a>
+      </div>
+      <div>
+        <h3>Mapa do site</h3>
+        <ul class="rodape-links">
+          <li><a href="../">Início</a></li>
+          <li><a href="../quem-somos/">Quem somos</a></li>
+          <li><a href="../blog/">Blog</a></li>
+          <li><a href="../consultoria/">Consultoria</a></li>
+          <li><a href="../contatos/">Contatos</a></li>
+          <li><a href="../treinamentos/">Treinamentos</a></li>
+          <li><a href="../autoavaliacao/">Autoavaliação</a></li>
+          <li><a href="../privacidade.html">Privacidade</a></li>
+          <li><a href="https://naocaianogolpe.com.br/">Não Caia no Golpe (projeto social)</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container rodape-base">
+      <p>© <span id="ano">2026</span> Resolve Fraude. Todos os direitos reservados.</p>
+      <a href="../privacidade.html">Política de Privacidade</a>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>
