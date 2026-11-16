@@ -342,3 +342,13 @@ details p { margin: .75rem 0 0; color: var(--texto-suave); }
 .artigo .triangulo { margin: 2rem auto; max-width: 460px; text-align: center; }
 .artigo .triangulo svg { width: 100%; height: auto; font-family: Roboto, Arial, sans-serif; }
 .artigo .triangulo figcaption { font-size: .8rem; color: var(--texto-suave); }
+
+/* Leia também */
+.artigo .leia-tambem { margin: 2.5rem 0 1rem; padding: 1.2rem 1.4rem; background: var(--fundo-alt); border: 1px solid var(--borda); border-radius: 10px; }
+.artigo .leia-tambem h2 { margin: 0 0 .8rem; font-size: 1.25rem; }
+.artigo .leia-tambem ul { list-style: none; padding: 0; margin: 0; display: grid; gap: .8rem; }
+.artigo .leia-tambem li { margin: 0; }
+.artigo .leia-tambem a { display: block; text-decoration: none; padding: .7rem .9rem; border-left: 3px solid var(--amarelo); background: var(--fundo); border-radius: 0 6px 6px 0; }
+.artigo .leia-tambem a:hover, .artigo .leia-tambem a:focus-visible { background: #2c3137; }
+.artigo .leia-tambem strong { display: block; color: var(--amarelo); }
+.artigo .leia-tambem span { display: block; font-size: .9rem; color: var(--texto-suave); margin-top: .2rem; }
