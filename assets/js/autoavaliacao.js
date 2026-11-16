@@ -1,7 +1,9 @@
 // Autoavaliação de maturidade: prevenção à fraude, segurança da informação e privacidade.
-// Tudo roda no navegador; nada é enviado a servidor. O visitante pode mandar o resultado por e-mail.
+// As respostas ficam no navegador. Só ao clicar em enviar, nome, empresa, e-mail, resumo e PDF
+// seguem para a função de envio (AWS Lambda + SES), que manda o e-mail e não grava nada.
 (() => {
   const EMAIL_DESTINO = 'contato@resolvefraude.com.br';
+  const ENVIO_URL = 'https://7fiafljuuhmkgyirkjknftcfim0beiwi.lambda-url.sa-east-1.on.aws/'; // URL da função Lambda de envio
   const CHAVE = 'rf-autoavaliacao-v4'; // mude a versão ao alterar a ordem das perguntas
 
   const ESCALA = [
@@ -383,6 +385,31 @@
     return pdf.output('blob');
   }
 
+  // Envia dados + PDF para a função de envio. Devolve true se o e-mail saiu.
+  async function enviarAutomatico(blob, resumo) {
+    if (!/^https:/.test(ENVIO_URL)) return false;
+    try {
+      const pdf = await new Promise((ok, erro) => {
+        const leitor = new FileReader();
+        leitor.onload = () => ok(String(leitor.result).split(',')[1]);
+        leitor.onerror = erro;
+        leitor.readAsDataURL(blob);
+      });
+      const controle = new AbortController();
+      const prazo = setTimeout(() => controle.abort(), 25000);
+      const resp = await fetch(ENVIO_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nome: estado.dados.nome, empresa: estado.dados.empresa, email: estado.dados.email, resumo, pdf }),
+        signal: controle.signal,
+      });
+      clearTimeout(prazo);
+      return resp.ok;
+    } catch (e) {
+      return false;
+    }
+  }
+
   function baixar(blob) {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -445,6 +472,7 @@
             <button class="botao botao-contorno" type="button" data-pdf>Salvar em PDF</button>
           </div>
           <p class="aa-status" role="status" hidden></p>
+          <p class="aa-nota-envio">Ao clicar em "Enviar resultado por e-mail", seu nome, empresa, e-mail e o PDF do resultado são enviados à Resolve Fraude para que possamos entrar em contato. Veja a <a href="../privacidade.html">política de privacidade</a>.</p>
         </div>
 
         <p class="aa-aviso">Esta autoavaliação é indicativa e baseada nas respostas informadas. Não substitui auditoria, certificação ou parecer jurídico. As referências citam requisitos e boas práticas da ISO/IEC 27001:2022, ISO/IEC 27005, ISO 22301, ISO/IEC 42001, NIST CSF 2.0, NIST AI RMF, CIS Controls v8.1, COSO/ACFE Fraud Risk Management Guide, ISO 37001, 37002 e 37301, ISO/IEC 27701, LGPD e resoluções da ANPD.</p>
@@ -465,6 +493,14 @@
       ocupado(true); avisar('Gerando o PDF...');
       try {
         const blob = await gerarPDF(r);
+        // 1º: envio automático para a Resolve Fraude (PDF anexado pelo servidor)
+        avisar('Enviando o resultado...');
+        if (await enviarAutomatico(blob, resumoEmail(geral, notas, principais))) {
+          avisar(`Pronto! Seu resultado foi enviado para a Resolve Fraude com o PDF em anexo. Em breve entraremos em contato pelo e-mail ${estado.dados.email}. Se quiser guardar uma cópia, clique em "Salvar em PDF".`);
+          ocupado(false);
+          return;
+        }
+        // Se o envio automático falhar, segue o caminho manual
         const arquivo = new File([blob], nomeArquivo(), { type: 'application/pdf' });
         const celular = window.matchMedia('(pointer: coarse)').matches;
         if (celular && navigator.canShare && navigator.canShare({ files: [arquivo] })) {

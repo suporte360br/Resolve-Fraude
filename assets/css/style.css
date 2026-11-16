@@ -306,6 +306,7 @@ details p { margin: .75rem 0 0; color: var(--texto-suave); }
 .aa-legenda li.atual { color: #fff; font-weight: 700; }
 .aa-legenda small { opacity: .7; font-weight: 400; }
 .aa-status { flex-basis: 100%; margin: 0; font-size: .92rem; color: var(--amarelo); }
+.aa-nota-envio { flex-basis: 100%; margin: .4rem 0 0; font-size: .82rem; color: var(--texto-suave); }
 .aa-cta .botao:disabled { opacity: .6; cursor: wait; }
 
 /* Foto de abertura dos artigos */
