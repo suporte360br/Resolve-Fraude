@@ -55,6 +55,76 @@
             "item": "https://resolvefraude.com.br/autoavaliacao/"
           }
         ]
+      },
+      {
+        "@type": "WebApplication",
+        "name": "Autoavaliação de maturidade em prevenção à fraude, segurança da informação e privacidade",
+        "url": "https://resolvefraude.com.br/autoavaliacao/",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Navegador web",
+        "inLanguage": "pt-BR",
+        "isAccessibleForFree": true,
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "BRL"
+        },
+        "provider": {
+          "@id": "https://resolvefraude.com.br/#org"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "A autoavaliação é gratuita?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sim. A autoavaliação é gratuita e o resultado aparece na hora, ao final das perguntas. Você também pode receber o relatório em PDF no seu e-mail."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Quanto tempo leva?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Cerca de 15 minutos. São 44 perguntas objetivas: 14 sobre prevenção à fraude, 18 sobre segurança da informação e 12 sobre privacidade e proteção de dados."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Em quais normas e frameworks as perguntas se baseiam?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Em prevenção à fraude, no Fraud Risk Management Guide do COSO e da ACFE, no Decreto nº 11.129/2022 e nas normas ISO 37001, 37002 e 37301. Em segurança, na ISO/IEC 27001:2022, ISO/IEC 27005, ISO 22301, ISO/IEC 42001, NIST CSF 2.0, NIST AI RMF e CIS Controls v8.1. Em privacidade, na LGPD, nas resoluções da ANPD e na ISO/IEC 27701."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Como a nota é calculada?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Cada item recebe uma nota de 0 (não existe) a 4 (gerenciado). A nota de cada área vai de 0 a 100 e corresponde a um nível de maturidade: Inicial (0 a 20), Básico (21 a 40), Em desenvolvimento (41 a 60), Estruturado (61 a 80) e Avançado (81 a 100)."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "O que acontece com os meus dados?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "As respostas ficam apenas no seu navegador enquanto você responde. Se você pedir o envio, o resultado vai para o e-mail que você informou. A Resolve Fraude só recebe os dados se você marcar a opção de enviar uma cópia. Veja a política de privacidade."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "A autoavaliação substitui uma auditoria?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Não. Ela é um diagnóstico indicativo, baseado nas suas respostas, para apontar prioridades. Para validar a eficácia dos controles, é preciso uma avaliação independente com evidências."
+            }
+          }
+        ]
       }
     ]
   }
@@ -89,6 +159,31 @@
     <section class="secao aa-secao">
       <div class="container estreito" id="autoavaliacao" aria-live="polite">
         <noscript><p>Para fazer a autoavaliação, ative o JavaScript do navegador.</p></noscript>
+      </div>
+    </section>
+
+    <section class="secao secao-alt">
+      <div class="container">
+        <h2 class="centro">O que a autoavaliação analisa</h2>
+        <p class="intro centro">Três áreas que, juntas, mostram o quanto sua empresa está protegida contra fraudes, ataques e incidentes com dados pessoais.</p>
+        <div class="grade grade-3">
+          <article class="item"><h3>Prevenção à fraude</h3><p>Política antifraude, avaliação de riscos, due diligence de terceiros, segregação de funções, controles de pagamento, monitoramento transacional interno e externo, canal de denúncias e investigação.</p><p class="aa-ref">COSO/ACFE · Decreto 11.129/2022 · ISO 37001, 37002 e 37301</p></article>
+          <article class="item"><h3>Segurança da informação</h3><p>Governança, gestão e aceite de riscos, controle de acessos (admissão, mudança e desligamento), MFA, backup, resposta a incidentes, continuidade de negócios, fornecedores e governança de IA.</p><p class="aa-ref">ISO/IEC 27001 · NIST CSF 2.0 · CIS Controls · ISO 22301 · ISO/IEC 42001</p></article>
+          <article class="item"><h3>Privacidade e LGPD</h3><p>Encarregado (DPO), mapeamento de dados, bases legais, direitos dos titulares, relatório de impacto, contratos com operadores, retenção e comunicação de incidentes à ANPD.</p><p class="aa-ref">LGPD · Resoluções CD/ANPD nº 2/2022, 15/2024 e 18/2024 · ISO/IEC 27701</p></article>
+        </div>
+        <p class="centro">Quer se aprofundar? Leia no blog sobre <a href="../blog/sinais-de-alerta-fraude-interna.html">sinais de alerta de fraude interna</a>, <a href="../blog/panoptico-monitoramento-transacional.html">monitoramento transacional</a> e <a href="../blog/canal-de-denuncias.html">canal de denúncias</a>, ou conheça a nossa <a href="../consultoria/">consultoria em prevenção à fraude</a>.</p>
+      </div>
+    </section>
+
+    <section id="faq" class="secao">
+      <div class="container estreito">
+        <h2 class="centro">Perguntas frequentes sobre a autoavaliação</h2>
+        <details><summary>A autoavaliação é gratuita?</summary><p>Sim. A autoavaliação é gratuita e o resultado aparece na hora, ao final das perguntas. Você também pode receber o relatório em PDF no seu e-mail.</p></details>
+        <details><summary>Quanto tempo leva?</summary><p>Cerca de 15 minutos. São 44 perguntas objetivas: 14 sobre prevenção à fraude, 18 sobre segurança da informação e 12 sobre privacidade e proteção de dados.</p></details>
+        <details><summary>Em quais normas e frameworks as perguntas se baseiam?</summary><p>Em prevenção à fraude, no Fraud Risk Management Guide do COSO e da ACFE, no Decreto nº 11.129/2022 e nas normas ISO 37001, 37002 e 37301. Em segurança, na ISO/IEC 27001:2022, ISO/IEC 27005, ISO 22301, ISO/IEC 42001, NIST CSF 2.0, NIST AI RMF e CIS Controls v8.1. Em privacidade, na LGPD, nas resoluções da ANPD e na ISO/IEC 27701.</p></details>
+        <details><summary>Como a nota é calculada?</summary><p>Cada item recebe uma nota de 0 (não existe) a 4 (gerenciado). A nota de cada área vai de 0 a 100 e corresponde a um nível de maturidade: Inicial (0 a 20), Básico (21 a 40), Em desenvolvimento (41 a 60), Estruturado (61 a 80) e Avançado (81 a 100).</p></details>
+        <details><summary>O que acontece com os meus dados?</summary><p>As respostas ficam apenas no seu navegador enquanto você responde. Se você pedir o envio, o resultado vai para o e-mail que você informou. A Resolve Fraude só recebe os dados se você marcar a opção de enviar uma cópia. Veja a <a href="../privacidade.html">política de privacidade</a>.</p></details>
+        <details><summary>A autoavaliação substitui uma auditoria?</summary><p>Não. Ela é um diagnóstico indicativo, baseado nas suas respostas, para apontar prioridades. Para validar a eficácia dos controles, é preciso uma avaliação independente com evidências.</p></details>
       </div>
     </section>
   </main>
