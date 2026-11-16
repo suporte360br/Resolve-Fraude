@@ -2,7 +2,7 @@
 // Tudo roda no navegador; nada é enviado a servidor. O visitante pode mandar o resultado por e-mail.
 (() => {
   const EMAIL_DESTINO = 'contato@resolvefraude.com.br';
-  const CHAVE = 'rf-autoavaliacao-v3'; // mude a versão ao alterar a ordem das perguntas
+  const CHAVE = 'rf-autoavaliacao-v4'; // mude a versão ao alterar a ordem das perguntas
 
   const ESCALA = [
     { valor: 0, rotulo: 'Não existe', ajuda: 'Não temos ou não sabemos.' },
@@ -51,7 +51,7 @@
       sigla: 'S',
       nome: 'Segurança da informação',
       descricao: 'Governança, gestão de riscos, proteção de sistemas, dados e pessoas, continuidade de negócios e gestão de crise, segundo a ISO/IEC 27001:2022, o NIST Cybersecurity Framework 2.0, os CIS Controls e a ISO 22301.',
-      referencias: 'ISO/IEC 27001:2022 (Anexo A), ISO/IEC 27005, NIST CSF 2.0, CIS Controls v8.1 e ISO 22301',
+      referencias: 'ISO/IEC 27001:2022 (Anexo A), ISO/IEC 27005, NIST CSF 2.0, CIS Controls v8.1, ISO 22301, ISO/IEC 42001 e NIST AI RMF',
       perguntas: [
         { titulo: 'Governança de segurança', texto: 'Segurança da informação tem governança definida: comitê ou fórum com participação da diretoria, papéis e responsabilidades claros, orçamento e alinhamento com os objetivos do negócio?', ref: 'ISO/IEC 27001 cl. 5.1 e 5.3; NIST CSF GV.OC, GV.RR, GV.OV', rec: 'Crie um comitê de segurança com a diretoria, defina papéis (matriz RACI), orçamento anual e pauta periódica de decisões.' },
         { titulo: 'Política e responsável por segurança', texto: 'Existe política de segurança da informação aprovada e uma pessoa responsável pelo tema?', ref: 'ISO/IEC 27001 cl. 5.2 e A.5.1–5.2; NIST CSF GV.PO, GV.RR', rec: 'Aprove uma política de segurança e designe um responsável (interno ou CISO como serviço).' },
@@ -69,6 +69,7 @@
         { titulo: 'Continuidade de negócios (SGCN) e mesa de crise', texto: 'Existe gestão de continuidade de negócios (análise de impacto, RTO/RPO, planos de continuidade) e um comitê de crise com papéis, comunicação e exercícios periódicos?', ref: 'ISO 22301; ISO/IEC 27001 A.5.29–5.30; NIST CSF RC.RP', rec: 'Faça a análise de impacto nos negócios (BIA), defina RTO/RPO dos processos críticos, monte o comitê de crise (mesa de crise) e realize ao menos um exercício por ano.' },
         { titulo: 'Conscientização e phishing', texto: 'Os colaboradores recebem treinamento de segurança e participam de simulações de phishing?', ref: 'ISO/IEC 27001 A.6.3; NIST CSF PR.AT; CIS 14', rec: 'Faça treinamentos curtos e frequentes e simulações de phishing trimestrais com retorno educativo.' },
         { titulo: 'Fornecedores e nuvem', texto: 'Fornecedores de TI e serviços em nuvem são avaliados quanto à segurança e têm requisitos em contrato?', ref: 'ISO/IEC 27001 A.5.19–5.23; NIST CSF GV.SC; CIS 15', rec: 'Classifique fornecedores por criticidade, peça evidências de segurança e inclua cláusulas contratuais.' },
+        { titulo: 'Política, governança e homologação de IA', texto: 'Existe política, governança e homologação de inteligência artificial: regras de uso aprovadas, inventário das ferramentas e modelos em uso, avaliação de riscos (vazamento de dados, vieses, decisões automatizadas) e aprovação formal antes de adotar uma nova solução de IA?', ref: 'ISO/IEC 42001:2023; ISO/IEC 23894; NIST AI RMF 1.0; ISO/IEC 27001 A.5.10 e A.5.23; LGPD art. 20', rec: 'Publique uma política de uso de IA (o que pode e o que não pode ser inserido nas ferramentas), mantenha um inventário das soluções em uso, crie um fluxo de homologação com avaliação de segurança, privacidade e riscos antes da adoção e defina um responsável ou comitê de IA.' },
         { titulo: 'Indicadores de segurança', texto: 'Há indicadores de segurança (KPIs e KRIs) medidos e reportados periodicamente à diretoria, com metas e análise crítica?', ref: 'ISO/IEC 27001 cl. 9.1 e 9.3; NIST CSF GV.OV, ID.IM', rec: 'Defina poucos indicadores com meta (ex.: % de MFA, tempo para corrigir vulnerabilidades críticas, taxa de clique em phishing, acessos revisados) e apresente à diretoria trimestralmente.' },
       ],
     },
@@ -367,7 +368,7 @@
     }
 
     y += 4;
-    paragrafo('Esta autoavaliação é indicativa e baseada nas respostas informadas. Não substitui auditoria, certificação ou parecer jurídico. As referências citam requisitos e boas práticas da ISO/IEC 27001:2022, ISO/IEC 27005, ISO 22301, NIST CSF 2.0, CIS Controls v8.1, COSO/ACFE Fraud Risk Management Guide, ISO 37001, 37002 e 37301, ISO/IEC 27701, LGPD e resoluções da ANPD.', 7.5, 'normal', '#7A8089');
+    paragrafo('Esta autoavaliação é indicativa e baseada nas respostas informadas. Não substitui auditoria, certificação ou parecer jurídico. As referências citam requisitos e boas práticas da ISO/IEC 27001:2022, ISO/IEC 27005, ISO 22301, ISO/IEC 42001, NIST CSF 2.0, NIST AI RMF, CIS Controls v8.1, COSO/ACFE Fraud Risk Management Guide, ISO 37001, 37002 e 37301, ISO/IEC 27701, LGPD e resoluções da ANPD.', 7.5, 'normal', '#7A8089');
 
     // Rodapé em todas as páginas
     const total = pdf.getNumberOfPages();
@@ -446,7 +447,7 @@
           <p class="aa-status" role="status" hidden></p>
         </div>
 
-        <p class="aa-aviso">Esta autoavaliação é indicativa e baseada nas respostas informadas. Não substitui auditoria, certificação ou parecer jurídico. As referências citam requisitos e boas práticas da ISO/IEC 27001:2022, ISO/IEC 27005, ISO 22301, NIST CSF 2.0, CIS Controls v8.1, COSO/ACFE Fraud Risk Management Guide, ISO 37001, 37002 e 37301, ISO/IEC 27701, LGPD e resoluções da ANPD.</p>
+        <p class="aa-aviso">Esta autoavaliação é indicativa e baseada nas respostas informadas. Não substitui auditoria, certificação ou parecer jurídico. As referências citam requisitos e boas práticas da ISO/IEC 27001:2022, ISO/IEC 27005, ISO 22301, ISO/IEC 42001, NIST CSF 2.0, NIST AI RMF, CIS Controls v8.1, COSO/ACFE Fraud Risk Management Guide, ISO 37001, 37002 e 37301, ISO/IEC 27701, LGPD e resoluções da ANPD.</p>
         <p class="aa-refazer"><button class="link" type="button" data-refazer>Refazer a autoavaliação</button></p>
       </section>`;
     const status = app.querySelector('.aa-status');
