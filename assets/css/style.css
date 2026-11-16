@@ -330,3 +330,12 @@ details p { margin: .75rem 0 0; color: var(--texto-suave); }
 .pessoa-temas { list-style: none; padding: 0; margin: .4rem 0 1rem; display: flex; flex-wrap: wrap; gap: .4rem; justify-content: center; }
 .pessoa-temas li { font-size: .8rem; border: 1px solid var(--borda); border-radius: 999px; padding: .2rem .7rem; color: var(--texto-suave); }
 .pessoa-link { margin-top: auto; font-weight: 600; }
+
+/* Tabelas nos artigos */
+.artigo .tabela { overflow-x: auto; margin: 1rem 0 1.5rem; }
+.artigo table { width: 100%; border-collapse: collapse; font-size: .92rem; min-width: 520px; }
+.artigo th, .artigo td { border: 1px solid var(--borda); padding: .55rem .7rem; text-align: left; vertical-align: top; }
+.artigo th { background: var(--fundo-alt); color: var(--amarelo); font-weight: 700; }
+.artigo h3 { margin: 1.6rem 0 .5rem; }
+.passos-contato { padding-left: 1.2rem; }
+.passos-contato li { margin-bottom: .7rem; }
