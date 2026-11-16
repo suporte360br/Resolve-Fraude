@@ -339,3 +339,6 @@ details p { margin: .75rem 0 0; color: var(--texto-suave); }
 .artigo h3 { margin: 1.6rem 0 .5rem; }
 .passos-contato { padding-left: 1.2rem; }
 .passos-contato li { margin-bottom: .7rem; }
+.artigo .triangulo { margin: 2rem auto; max-width: 460px; text-align: center; }
+.artigo .triangulo svg { width: 100%; height: auto; font-family: Roboto, Arial, sans-serif; }
+.artigo .triangulo figcaption { font-size: .8rem; color: var(--texto-suave); }
