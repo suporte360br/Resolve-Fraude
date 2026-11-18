@@ -352,3 +352,18 @@ details p { margin: .75rem 0 0; color: var(--texto-suave); }
 .artigo .leia-tambem a:hover, .artigo .leia-tambem a:focus-visible { background: #2c3137; }
 .artigo .leia-tambem strong { display: block; color: var(--amarelo); }
 .artigo .leia-tambem span { display: block; font-size: .9rem; color: var(--texto-suave); margin-top: .2rem; }
+
+/* Blog: filtros por tema e busca */
+.visualmente-oculto { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.blog-filtros { margin: 0 auto 2rem; max-width: 900px; text-align: center; }
+.blog-busca input { width: 100%; max-width: 560px; padding: .85rem 1.1rem; border-radius: 999px; border: 1px solid var(--borda); background: var(--fundo); color: var(--texto); font: inherit; font-size: 1rem; }
+.blog-busca input:focus { outline: 2px solid var(--amarelo); outline-offset: 2px; border-color: var(--amarelo); }
+.blog-temas { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; margin-top: 1rem; }
+.blog-temas button { padding: .45rem 1rem; border-radius: 999px; border: 1px solid var(--borda); background: var(--fundo); color: var(--texto); font: inherit; font-size: .9rem; cursor: pointer; }
+.blog-temas button:hover { border-color: var(--amarelo); }
+.blog-temas button[aria-pressed="true"] { background: var(--amarelo); border-color: var(--amarelo); color: #1d2024; font-weight: 700; }
+.blog-contador { margin: .9rem 0 0; font-size: .85rem; color: var(--texto-suave); }
+.blog-vazio { text-align: center; margin-top: 1.5rem; color: var(--texto-suave); }
+.post-card[hidden] { display: none; }
+.post-temas { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .9rem; }
+.post-temas span { font-size: .72rem; padding: .15rem .55rem; border-radius: 999px; border: 1px solid var(--borda); color: var(--texto-suave); }
