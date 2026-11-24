@@ -240,7 +240,7 @@
     if (window.jspdf) return Promise.resolve(window.jspdf.jsPDF);
     return new Promise((ok, erro) => {
       const s = document.createElement('script');
-      s.src = '../assets/js/vendor/jspdf.umd.min.js';
+      s.src = '../assets/js/vendor/jspdf-4.2.1.umd.min.js';
       s.onload = () => ok(window.jspdf.jsPDF);
       s.onerror = () => erro(new Error('Não foi possível carregar o gerador de PDF.'));
       document.head.appendChild(s);
@@ -387,7 +387,7 @@
 
   // Envia dados + PDF para a função de envio: sempre ao visitante e, se ele quiser, à Resolve Fraude.
   // Devolve o status HTTP (200 = enviado) ou 0 em caso de falha de rede.
-  async function enviarAutomatico(blob, resumo, copiaResolve) {
+  async function enviarAutomatico(blob, notasEnvio, copiaResolve) {
     if (!/^https:/.test(ENVIO_URL)) return 0;
     try {
       const pdf = await new Promise((ok, erro) => {
@@ -401,7 +401,7 @@
       const resp = await fetch(ENVIO_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nome: estado.dados.nome, empresa: estado.dados.empresa, email: estado.dados.email, resumo, pdf, copiaResolve }),
+        body: JSON.stringify({ nome: estado.dados.nome, empresa: estado.dados.empresa, email: estado.dados.email, notas: notasEnvio, pdf, copiaResolve }),
         signal: controle.signal,
       });
       clearTimeout(prazo);
@@ -497,7 +497,7 @@
         const blob = await gerarPDF(r);
         const copia = app.querySelector('[data-copia]').checked;
         avisar('Enviando o resultado...');
-        const st = await enviarAutomatico(blob, resumoEmail(geral, notas, principais), copia);
+        const st = await enviarAutomatico(blob, { geral, ...Object.fromEntries(DOMINIOS.map((d, i) => [d.id, notas[i]])) }, copia);
         if (st === 200) {
           avisar(`Pronto! Enviamos o resultado com o PDF para ${estado.dados.email}.${copia ? ' Uma cópia foi enviada à Resolve Fraude, e em breve entraremos em contato.' : ''} Se não encontrar a mensagem, confira a caixa de spam.`);
         } else if (st === 429) {
