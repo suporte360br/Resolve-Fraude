@@ -180,6 +180,8 @@ details p { margin: .75rem 0 0; color: var(--texto-suave); }
 .artigo h2 { font-size: 1.5rem; margin: 2.2rem 0 .8rem; }
 .artigo li { margin-bottom: .4rem; }
 .artigo .chamada { margin-top: 3rem; padding: 1.5rem; border-left: 4px solid var(--amarelo); background: var(--fundo-alt); border-radius: 0 6px 6px 0; }
+.artigo .em-resumo { margin: 1.5rem 0 2rem; padding: 1.2rem 1.4rem; background: var(--fundo-alt); border: 1px solid var(--borda); border-radius: 6px; }
+.artigo .em-resumo p { margin: 0; }
 
 /* Página de texto */
 .texto { padding: 50px 0 70px; }
